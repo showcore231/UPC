@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to Pipe | Conversor Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1 class="glow-text">Excel to Pipe</h1>
+            <p class="subtitle">Convierte tus hojas de cálculo a formato delimitado por tubería (|)</p>
+        </header>
+
+        <main>
+            <div id="drop-zone" class="glass-card">
+                <div class="icon-container">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                </div>
+                <h3>Arrastra y suelta tu archivo Excel</h3>
+                <p>O haz clic para seleccionar (soporta .xlsx, .xls)</p>
+                <input type="file" id="file-input" accept=".xlsx, .xls" hidden>
+            </div>
+
+            <div id="sheet-selection-container" class="glass-card hidden animate-fade-in">
+                <h3>Selecciona la hoja de trabajo</h3>
+                <div class="sheet-list" id="sheet-list">
+                    <!-- Las hojas se cargarán aquí dinámicamente -->
+                </div>
+                <div class="actions">
+                    <button id="cancel-sheet-btn" class="secondary-btn">Cancelar</button>
+                </div>
+            </div>
+
+            <div id="status-container" class="status-container hidden">
+                <div class="loader-circle"></div>
+                <span>Procesando archivo...</span>
+            </div>
+
+            <div id="result-container" class="glass-card hidden animate-fade-in">
+                <div class="result-header">
+                    <div class="header-titles">
+                        <h4>Vista Previa del Resultado</h4>
+                        <span id="file-name-label">Nombre del archivo.xlsx</span>
+                    </div>
+                    <div class="actions">
+                        <button id="download-btn" class="primary-btn mini-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Descargar
+                        </button>
+                        <button id="reset-btn" class="secondary-btn mini-btn">Convertir otro</button>
+                    </div>
+                </div>
+
+                <!-- Notificación de éxito -->
+                <div id="save-success" class="alert-success hidden">
+                    <span>Archivo guardado con éxito. </span>
+                    <a href="#" id="open-file-link">Ver en carpeta</a>
+                </div>
+
+                <div class="preview-area">
+                    <pre id="preview-text"></pre>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-info">
+                <span>Versión 1.0.0</span>
+                <span class="dot"></span>
+
+            </div>
+        </footer>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado', reg))
+                    .catch(err => console.log('Error de SW', err));
+            });
+        }
+    </script>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
